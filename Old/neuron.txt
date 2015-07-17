@@ -1,0 +1,25 @@
+goals: 
+spring of life
+simulation
+
+things that generate properties increase the properties in their grid, 
+
+
+
+
+#property propogation test
+#8-cell average method
+gridxrange=10
+gridyrange=10
+grid = [[10 for i in range(gridxrange)] for j in range(gridyrange)]
+def Neighbors(x,y):
+	return [[x-1,y],[x-1,y-1],[x,y-1],[x+1,y-1],[x+1,y],[x+1,y+1],[x,y+1],[x-1,y+1]]
+def Anneal():
+	for i,j in range(gridxrange),range(gridyrange):
+		sum=0
+		for nx,ny in Neighbors(i,j):
+			sum+=grid[nx,ny]
+		grid[i,j]=sum/8
+
+
+

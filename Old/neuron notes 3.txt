@@ -1,0 +1,9 @@
+within a time step, 
+Xf is defined by the velocity
+the velocity is defined by collisions and acceleration
+acceleration is defined by the organ, as well as by deformation of the object
+
+
+NEW IDEA! 
+store attachment strength AND supporting strength (=mass of neighbor plus vectorized neighbor's attachment strength)
+

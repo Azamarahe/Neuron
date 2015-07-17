@@ -1,0 +1,11 @@
+1. if any cells accelerate, move them independently of their bodies. move bodies and cells.
+2. detect collisions, apply velocities assuming free cells.
+3. project as if free. 
+4. detect collisions, apply velocities assuming free cells. (should be a minimum distance constraint, so force eventually dies out)
+5. when collisions end, 
+
+
+
+option: store attachment strength vector? if impulse is greater than that, 
+
+

@@ -1,0 +1,154 @@
+neural glands should be in sensor list so things can attach to them, 
+but also have an attachment point of their own, so they are also in the neuron list. 
+
+
+each neuron stores the layer,index of its inputs
+
+
+
+
+MARKERS MUST BE INCREMENTED AFTER NEURON IS FINISHED!
+
+
+make a bunch of sensors first
+
+
+tonight's goals: make an organism that can respond to its environment
+phase 1: random organism genome creation
+phase 2: genome transcription
+phase 3: organism simulation
+phase 4: simulation
+phase 5: environment initial conditions
+
+
+the SOL creates new genes, but it should also create organisms with new combinations of old ones...
+
+
+step 1: generate genes, store in library
+step 2: randomly build an organism from these genes
+
+pain, proof, more cruelty, more frequency, insults, urine, swallow key, stack weights, hurt feet, demand immediate response
+
+
+
+organisms need organs to produce fields (scents), attach, move, manipulate, eat
+organs imbue the organism with vulnerabilities to fields
+fields can damage organisms
+
+
+physics simulation steps:
+for each grid, step all fields
+loop through each posted force, evaluate traction and terrain, evaluate current collisions with neighbors, reassign forces. 
+for each attached body,
+	for each piece in the body,
+		get force
+		for each neighbor
+			get force
+			compare difference of forces to attachment strength
+				detatch if greater, add to body sum if not
+
+alternate proposal: 
+motility organ generates force, which is mitigated by traction, terrain, friction, and mass, and becomes a change in velocity
+
+velocity based attachment: remove momentum associated with detatching velocity.
+
+http://en.wikipedia.org/wiki/Coefficient_of_restitution#Speeds_after_impact
+
+
+either move one pixel every "inverse speed" time steps, or create a unit vector and march along it through the grid to find collisions. 
+Once a collision is detected, apply partially elastic collision to change velocity
+
+	
+
+http://www.wildbunny.co.uk/blog/2011/04/06/physics-engines-for-dummies/
+http://gamedevelopment.tutsplus.com/tutorials/modelling-and-solving-physical-constraints--gamedev-12578
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.206.4908&rep=rep1&type=pdf
+http://www.xbdev.net/physics/Verlet/index.php
+
+physics:
+physics simulation steps:
+FIELD PROPOGATION:
+for each grid, step all fields
+ACCELERATION:
+loop through each posted force, evaluate traction, terrain, and friction, divide by mass, apply new velocity
+DETATCHMENT:
+for each particle in body,
+attempt a collision. get the resulting velocity change.
+go back through particles. If the change in velocity is less than attachment strength, do nothing.
+if it is greater, carry out the collision with the individual particle, detatch the particle, collide with each neighbor at v minus v-attachment strength.
+ATTACHED BODIES:
+normalize momentum across each attached body
+
+
+
+
+last try...
+carry out all virtual, free particle collisions. if the difference in velocities between attached points is greater than attachment strength, detach, 
+
+
+
+
+for particle in particles:
+	particle.v2=Detect_Collision(particle)
+for particle in particles: #might need to run multiple times in order to get all. 
+	v2=particle.v2
+	for neighbor in particles.attached_neighbors:
+		delta_v=v2-neighbor.particle.v #vectorize
+		if delta_v>neighbor.strength:
+			Detach(particle,neighbor)
+			neighbor.v2=Collide(neighbor,particle.mass,particle.v1-neighbor.strength)
+
+
+
+
+Hi, /r/askphysics! I'm working on a programming project that requires a basic physics simulation. The entities in the simulation are all identical squares of varying masses. The tricky part is that I would like them to 'link' or 'clump.' The bonds will have a fixed distance, but limited binding strength. If an impact is strong enough, it should be able to break one of the squares loose. Can anyone tell me how this is usually modeled? Any advice or references to useful literature are also appreciated.
+
+My plan so far is this:
+0. for each force, if it's part of a body, if the force is greater than the binding force, detach from that neighbor. if it now has no neighbors, clear all body pointers. if it still has neighbors, we have to check later to see if there are any shared cells between the bodies. 
+1.  project all moving squares according to their velocity in one time step
+
+2. detect collisions
+
+3. save collisions to list, assign resulting velocities assuming a partially elastic collision (with COR)
+
+4 loop through a list of 'clumped bodies.' **only the ones that are involved in collisions** Using the velocities obtained in the last step, if the difference between any two neighbors is greater than their binding strength, remove their binding constraint. create virtual particles, collide with neighbors, go to step 3. 
+
+5. loop through the list of collisions (as pairs of particles). if any of the particles are part of clumped bodies, carry out the collision between clumped bodies as a whole. 
+
+
+
+molecular dynamics simulation
+
+http://www.ch.embnet.org/MD_tutorial/pages/MD.Part3.html
+
+https://chipmunk-physics.net/release/ChipmunkLatest-Docs/
+
+
+
+detect collisions assuming bodies first? bodies still have to collide at a cell. could create a boundingrect/grid based optimization...
+moving each cell would take longer than moving just the body. body should have a boundingrect and a bitmap.
+
+
+if force is part of a body, apply it to whole body. compare it to sum of neighbors binding strength. if it's greater, detach from neighbors. 
+move all objects.
+modulus into laaarge sectors. modulus by a quarter of the sector size, using the body's topleft. if the body falls in the topleft square of the sector, it's only in that sector. if it falls in the topright, it's in that sector and the one to the right. etc.
+cells collide by occupying same space, easily detected. 
+loop through bodies to detect bounding rect collisions. if a boundingrect intersects another, scan intersection in bitmaps of both bodies to detect collision. if a cell exists in a bounding rect, scan that point in the bitmap for occupancy.
+if a collision occurs, calculate resulting velocity, accounting for body angular velocity.
+if resultant velocity 
+
+
+
+
+
+when evaluating forces, if a cell's force is greater than any of its neighbors binding forces, it breaks free from that neighbor. 
+
+bonds break in order of weakest to strongest, depleting cell force in the process. 
+used up force is applied at cells. additional force is applied only to cell. 
+if force is less than binding strength then force is applied to body at cell.
+
+
+1. all cells move freely. (optimize by moving full bodies if there are no accelerations)
+2. detect collisions, apply resulting velocities
+3. 
+if a cell has moved too far, consider it broken.
