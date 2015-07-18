@@ -1,29 +1,24 @@
 from Gene_Types import *
+class _neuron:
+    pass
 def Transcribe_Brain(starting_layer,neurons):
     """For each neuron in the starting layer,
     find all the neurons that connect to it (have inputs identical to its tag)"""
-    i=0
-    l=len(starting_layer)
-    n=len(neurons)
     temp_layer = []
     for origin_neuron in starting_layer:
-        print("Checking origin ",i," of ",l)
-        i=i+1
-        print("Origin tag is ",origin_neuron.tag)
-        j=0
+        n=_neuron()
+        n.parents=[]
         for neuron in neurons:
-            print("neuron: ",j," of ",n)
-            j=j+1
             for n_input in neuron.inputs:
-                print("input: ",n_input.input)
                 if n_input.input==origin_neuron.tag: 
                     temp_layer.append(neuron)
+                    #keeping track of parents would allow for pruning
+                    n.parents.append(neuron)
     #return (temp_layer,Transcribe_Brain(temp_layer,neurons))
     return temp_layer
 
 class Organism:
     pass
-
 def Transcribe_Genome(genome):
     o=Organism()
     sensors=[]

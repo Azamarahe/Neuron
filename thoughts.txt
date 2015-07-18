@@ -1,0 +1,32 @@
+new system: top-down nested calls
+
+sensor value is dependant on location...
+how to implement this? 
+
+for each sensor (with function level), (in organism) 
+get spectrum value in span at location
+
+
+
+sensor genes are sensor prototypes. sensor functions are stored here. 
+
+sensors in organism store function level and Sensor protoype
+
+
+need to rename Sensor to Sensor_Type?
+
+decision: remember above as an option, but currently the feature is not needed. 
+
+
+does world field value access need to be a function, or can it be data?
+data seems less secure...
+
+
+in brain transcription,
+create a virtual neuron
+
+
+in brain transcription, each layer should be composed of neurons for which all inputs are in one of the previous layers...
+
+
+cutest way would be if Value(), when called by a sensor, translates to 

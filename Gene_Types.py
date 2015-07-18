@@ -1,6 +1,7 @@
 from random import *
 from Gene import *
-from Spectrum import *
+from Field import *
+from World import *
 
 class Origin(Gene):
    @staticmethod
@@ -19,9 +20,12 @@ class Origin(Gene):
 class n_input:
          pass
 class Sensor(Origin):
+   def Value(self,location):
+      #TODO: return Field value at location mapped to span range/function
+      #requires access to world - use static data in World?
    def __init__(self):
-      self.spectrum=Spectrum.Get_Random()
-      self.range=Spectrum.Get_Range()
+      self.field=Field.Get_Random()
+      self.range=Field.Get_Range()
       self.Init_Base()
 class Neuron(Origin):
    def Set_Inputs(self):
