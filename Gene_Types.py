@@ -23,6 +23,7 @@ class Sensor(Origin):
    def Value(self,location):
       #TODO: return Field value at location mapped to span range/function
       #requires access to world - use static data in World?
+      return World.Get_Field_Value(location,self.field)
    def __init__(self):
       self.field=Field.Get_Random()
       self.range=Field.Get_Range()
